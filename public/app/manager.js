@@ -1,51 +1,38 @@
 define(function (require) {
 
   var debugMode = require('./modes/debugMode');
-
-  var playlistPosition, triggerTime, playing;
+  var twoMode = require('./modes/twoMode');
+  var pixiMode = require('./modes/pixiMode');
   
-  var playlist = [
-    {mode:'debug', duration:0, user:'subject'}
-  ];
-
   function Manager(id) {
-    this.modes = {
-      debug: debugMode,
-    };
+    this.modes = [
+      {mode:debugMode, duration:0},
+      {mode:twoMode, duration:0},
+      {mode:pixiMode, duration:0}
+    ];
+    this.curMode = 0;
+    this.playing = false;
+
 
     this.start = function() {
+      console.log(this.getCurrentMode())
       this.getCurrentMode().init();
     }
 
     this.sync = function() {
-
     };
 
     this.reset = function() {
-      if(playing) {
+      if(this.playing) {
         this.getCurrentMode().exit();
       }
-      playlistPosition = 0;
-      triggerTime = 0;
-      playing = false;
     }
     
 
-    this.getCurrentScene = function() {
-      return playlist[playlistPosition];
-    }
-
-    this.getCurrentModeName = function() {
-      return this.getCurrentScene().mode;
-    }
-
     this.getCurrentMode = function() {
-      return this.modes[this.getCurrentModeName()];
+      return this.modes[this.curMode].mode;
     }
 
-    this.getCurrentDuration = function() {
-      return this.getCurrentScene().duration;
-    }
 
     this.reset();
 
