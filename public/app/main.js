@@ -4,4 +4,8 @@ define(function (require) {
     var manager = new Manager();
     manager.start();
 
+    // setInterval(function() {
+    //   manager.update();
+    // }, 1);
+
 });

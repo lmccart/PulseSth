@@ -1252,7 +1252,7 @@ amdclean['p5Vector'] = function (require, core, polargeometry, constants) {
     }
   };
   p5.Vector.prototype.dist = function (v) {
-    var d = v.get().sub(this);
+    var d = v.copy().sub(this);
     return d.mag();
   };
   p5.Vector.prototype.normalize = function () {
@@ -1361,7 +1361,7 @@ amdclean['p5Vector'] = function (require, core, polargeometry, constants) {
   };
   p5.Vector.add = function (v1, v2, target) {
     if (!target) {
-      target = v1.get();
+      target = v1.copy();
     } else {
       target.set(v1);
     }
@@ -1370,7 +1370,7 @@ amdclean['p5Vector'] = function (require, core, polargeometry, constants) {
   };
   p5.Vector.sub = function (v1, v2, target) {
     if (!target) {
-      target = v1.get();
+      target = v1.copy();
     } else {
       target.set(v1);
     }
@@ -1379,7 +1379,7 @@ amdclean['p5Vector'] = function (require, core, polargeometry, constants) {
   };
   p5.Vector.mult = function (v, n, target) {
     if (!target) {
-      target = v.get();
+      target = v.copy();
     } else {
       target.set(v);
     }
@@ -1388,7 +1388,7 @@ amdclean['p5Vector'] = function (require, core, polargeometry, constants) {
   };
   p5.Vector.div = function (v, n, target) {
     if (!target) {
-      target = v.get();
+      target = v.copy();
     } else {
       target.set(v);
     }
@@ -1406,7 +1406,7 @@ amdclean['p5Vector'] = function (require, core, polargeometry, constants) {
   };
   p5.Vector.lerp = function (v1, v2, amt, target) {
     if (!target) {
-      target = v1.get();
+      target = v1.copy();
     } else {
       target.set(v1);
     }
