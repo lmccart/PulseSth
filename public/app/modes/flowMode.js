@@ -1,11 +1,10 @@
 define(['jquery', 'p5', './mode'], function ($, p5, Mode) {
   var m = new Mode();
-  var sketch;
   
   m.init = function(user) {
     //$('body').append('<div id="fonts" style="position:absolute">TEST</div>');
 
-    sketch = new p5(function(p) {
+    m.sketch = new p5(function(p) {
 
 
       var resolutionX = 200;
@@ -67,9 +66,9 @@ define(['jquery', 'p5', './mode'], function ($, p5, Mode) {
         mask = p.loadImage('mask-low-res.png');
       };
       p.setup = function() {
+        p.devicePixelScaling(m.dps);
         s = Math.floor(p.windowHeight/resolutionY);
-        var c = p.createCanvas(resolutionX*s, resolutionY*s);
-        //c.elt.style['-webkit-filter'] = 'blur('+s*0.5+'px)';
+        m.c = p.createCanvas(m.width, m.height);
 
         for (var i = 0; i<resolutionX; i++) {
           flow[i] = [];
@@ -116,12 +115,9 @@ define(['jquery', 'p5', './mode'], function ($, p5, Mode) {
             p.rect(x * zoom, y * zoom, zoom, zoom);
           }
         }
+        if (m.blur) p.image(mask, 0, 0, p.width, p.height);
       }
     })
-  }
-
-  m.exit = function(user) {
-    sketch.remove();
   }
 
 

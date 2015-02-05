@@ -1,20 +1,27 @@
 define(function (require) {
 
-  var wormMode = require('./modes/wormMode');
-  var arrayMode = require('./modes/arrayMode');
-  var flowMode = require('./modes/flowMode');
-  var twoMode = require('./modes/twoMode');
+  var opMode = require('./modes/opMode');
   var faderMode = require('./modes/faderMode');
-  var pixiMode = require('./modes/pixiMode');
-  
+  var rippleMode = require('./modes/rippleMode');
+  var grassMode = require('./modes/grassMode');
+  var smokeMode = require('./modes/smokeMode');
+  var separationMode = require('./modes/separationMode');
+  var flockingMode = require('./modes/flockingMode');
+  var swipeMode = require('./modes/swipeMode');
+  var arrayMode = require('./modes/arrayMode');
+
   function Manager(id) {
     this.modes = [
-      {mode:wormMode, duration:10*1000},
+      {mode:separationMode, duration:10*1000},
+      {mode:swipeMode, duration:5*1000},
+      {mode:flockingMode, duration:10*1000},
       {mode:arrayMode, duration:5*1000},
+      {mode:swipeMode, duration:5*1000},
+      {mode:smokeMode, duration:5*1000},
+      {mode:grassMode, duration:5*1000},
       {mode:faderMode, duration:5*1000},
-      {mode:flowMode, duration:5*1000},
-      {mode:twoMode, duration:0},
-      {mode:pixiMode, duration:0}
+      {mode:rippleMode, duration:5*1000},
+      {mode:opMode, duration:5*1000},
     ];
     this.curMode = 0;
     this.playing = false;
@@ -30,7 +37,7 @@ define(function (require) {
     this.update = function() {
       var now = performance.now();
       if (now - this.modeStartTime >= this.getCurrentDuration()) {
-        this.next();
+        //this.next();
       }
     }
 
@@ -44,7 +51,7 @@ define(function (require) {
       }
       this.getCurrentMode().init();
     }
-
+    
     this.reset = function() {
       if(this.playing) {
         this.getCurrentMode().exit();

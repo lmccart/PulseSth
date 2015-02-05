@@ -1,6 +1,5 @@
 define(['jquery', 'p5', './mode'], function ($, p5, Mode) {
     var m = new Mode();
-    var sketch;
 
     // 2D Array of objects
     var grid = [];
@@ -9,11 +8,10 @@ define(['jquery', 'p5', './mode'], function ($, p5, Mode) {
     var cols = 20;
     var rows = 28;
     var h;
-
     m.init = function(user) {
       //$('body').append('<div id="fonts" style="position:absolute">TEST</div>');
 
-      sketch = new p5(function(p) {
+      m.sketch = new p5(function(p) {
 
         // A Cell object
         function Cell(x_, y_, w_, h_, a_) {
@@ -24,7 +22,7 @@ define(['jquery', 'p5', './mode'], function ($, p5, Mode) {
           this.angle = a_;
 
           this.oscillate = function() {
-            this.angle += 0.02; 
+            this.angle += p.random(-1, 0.25); 
           };
 
           this.display = function() {
@@ -32,7 +30,7 @@ define(['jquery', 'p5', './mode'], function ($, p5, Mode) {
             //stroke(255);
             // Color calculated using sine wave
 
-            var v = 127+127*p.sin(this.angle);
+            var v = 180+75*p.sin(this.angle);
             v = v * this.y/p.height;
             p.fill(v);
             p.rect(this.x, this.y, this.w, this.h); 
@@ -46,9 +44,10 @@ define(['jquery', 'p5', './mode'], function ($, p5, Mode) {
           mask = p.loadImage('mask-low-res.png');
         };
         p.setup = function() {
+          p.devicePixelScaling(m.dps);
           s = Math.floor(p.windowHeight/15);
-          var c = p.createCanvas(20*s, 15*s);
-          c.elt.style['-webkit-filter'] = 'blur('+s*0.5+'px)';
+          m.c = p.createCanvas(m.width, m.height);
+          m.postCanvas();
           h = p.int(p.width/cols);
           for (var i=0; i<cols; i++) {
             grid[i] = [];
@@ -67,14 +66,11 @@ define(['jquery', 'p5', './mode'], function ($, p5, Mode) {
               grid[i][j].display();
             }
           }
-          p.image(mask, 0, 0, p.width, p.height);
+          if (m.blur) p.image(mask, 0, 0, p.width, p.height);
         }
       })
     }
 
-    m.exit = function(user) {
-      sketch.remove();
-    }
 
     return m;
 });
