@@ -18,6 +18,7 @@ define(['jquery', 'p5', 'p5.dom', './mode'], function ($, p5, p5dom, Mode) {
           p.devicePixelScaling(m.dps);
           s = Math.floor(p.windowHeight/15);
           v = p.createVideo('vids/ripples.mp4');
+          v.elt.playbackRate = 3;
           //v.elt.style['-webkit-filter'] = 'blur('+s*0.5+'px)';
           v.hide();
           v.loop();
@@ -32,7 +33,7 @@ define(['jquery', 'p5', 'p5.dom', './mode'], function ($, p5, p5dom, Mode) {
             }
             m.c.elt.style['-webkit-filter'] = 'contrast('+contrast+') brightness('+brightness+')';
             if (m.blur) m.c.elt.style['-webkit-filter'] += ' blur('+s*0.5+'px)';
-            v.elt.playbackRate *= 1.5;
+            v.elt.playbackRate *= 0.85;
           }, 3000);
         };
         p.draw = function() {
